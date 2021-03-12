@@ -2,6 +2,7 @@ import speech_recognition as sr
 import os
 from fuzzywuzzy import fuzz
 from music import play_music, change_volume
+from conversation import introduction
 
 r = sr.Recognizer()
 
@@ -21,20 +22,7 @@ def main():
 				text = text.lower()
 
 				if 'introduce' in text:
-					if 'yourself' in text:
-						print("Hello, I'm Sebastian, a personal AI assistant. What's your name?")
-						audio = r.listen(source)
-						text = r.recognize_google(audio)
-						try:
-							text = r.recognize_google(audio)
-							if 'my name is ' in text:
-								name = text.replace('my name is ', '')
-								print('Hello, ' + name + '.')
-							elif "I'm " in text:
-								name = text.replace("I'm ", '')
-								print('Hello, ' + name + '.')
-						except Exception as e:
-							print(e)
+					introduction(text, source)
 
 				if 'play' in text:
 					play_music(text)
@@ -47,3 +35,8 @@ def main():
 			main()
 	main()
 main()
+
+def command(key, text, command):
+	if key in text:
+		text = text.replace(key, '')
+		command.execute(text)

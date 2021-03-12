@@ -5,6 +5,7 @@ itunes = os.listdir("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Mus
 playlists = []
 
 def play_music(text):
+	text = text.replace('play', '', 1)
 	if 'tunes' in text:
 		print('Playing music...')
 	else:
@@ -12,19 +13,18 @@ def play_music(text):
 			if pl in text:
 				print('Playing playlist...')
 				break
-		for a in itunes:
-			if fuzz.partial_ratio(text,str(a).lower()) > 90:
-				text = text.replace(str(a).lower(), '')
-			#if str(a) in text:
-				albums = os.listdir("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + a)
-				print(albums)
-				for al in albums:
-					album = str(al).lower()
 
+		for artist in itunes:
+			if fuzz.partial_ratio(text,str(artist).lower()) > 90:
+				text = text.replace(str(artist).lower(), '', 1)
+				albums = os.listdir("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + artist)
+
+				for alb in albums:
+					album = str(alb).lower()
 					if fuzz.partial_ratio(text, album) > 70:
-						album = os.listdir("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + a + '\\' + al)
-						os.startfile("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + a + '\\' + al + '\\' + album[0])
-						print('Playing ' + al + ' by ' + a + '...')
+						album = os.listdir("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + artist + '\\' + alb)
+						os.startfile("F:\\Generic Folders\\Music - HDD\\iTunes\\iTunes Media\\Music\\" + artist + '\\' + alb + '\\' + alb[0])
+						print('Playing ' + alb + ' by ' + artist + '...')
 						break
 
 def change_volume(text):
