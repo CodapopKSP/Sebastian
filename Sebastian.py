@@ -3,9 +3,7 @@ import os
 from fuzzywuzzy import fuzz
 from music import play_music, change_volume
 
-
 r = sr.Recognizer()
-
 
 def main():
 	with sr.Microphone() as source:
@@ -43,8 +41,6 @@ def main():
 
 				if 'volume' in text:
 					change_volume(text)
-
-
 
 		except Exception as e:
 			print(e)
